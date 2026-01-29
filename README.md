@@ -73,13 +73,29 @@ Choose one of the following installation methods:
    STATION_ID=<Your Station ID>
    ```
 
-3. **Start the container**
+3. **Create docker-compose.yaml** (if pulling from Docker Hub)
+
+   If you're pulling the pre-built image from Docker Hub instead of building locally, create a `docker-compose.yaml`:
+
+   ```yaml
+   services:
+     amber2sigen:
+       image: talie5in/amber2sigen:latest
+       container_name: amber2sigen
+       restart: unless-stopped
+       env_file:
+         - amber2sigen.env
+   ```
+
+   > **Important:** Use `env_file` to load your environment variables, not `volumes`. The `env_file` directive tells Docker Compose to read the file and set each line as an environment variable inside the container. Volume mounting the file does **not** set environment variables.
+
+4. **Start the container**
 
    ```bash
    docker compose up -d
    ```
 
-4. **View logs**
+5. **View logs**
 
    ```bash
    docker compose logs -f
